@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addPerson, deletePerson } from './actions';
 
@@ -10,32 +10,44 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-class App extends React.Component {
+class App extends Component {
   state = {
-    inputValue: '',
+    nameValue: '',
+    jobValue: ''
   }
   addPerson = () => {
-    if (this.state.inputValue === '') return;
+    if (this.state.nameValue === '') return;
+    if (this.state.jobValue === '') return;
     this.props.dispatchAddPerson({
-      name: this.state.inputValue,
+      name: this.state.nameValue,
+      job: this.state.jobValue
     });
-    this.setState({ inputValue: '' });
+    this.setState({ nameValue: '', jobValue: '' });
   }
   deletePerson = (person) => {
     this.props.dispatchdeletePerson(person)
   }
-  updateInput = (inputValue) => {
-    this.setState({ inputValue })
+  updateInputName = (nameValue) => {
+    this.setState({ nameValue })
+  }
+  updateInputJob = (jobValue) => {
+    this.setState({ jobValue })
   }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>People</Text>
         <TextInput
-          onChangeText={text => this.updateInput(text)}
+          onChangeText={text => this.updateInputName(text)}
           style={styles.input}
-          value={this.state.inputValue}
+          value={this.state.nameValue}
           placeholder="Name"
+        />
+        <TextInput
+          onChangeText={text => this.updateInputJob(text)}
+          style={styles.input}
+          value={this.state.jobValue}
+          placeholder="Job"
         />
         <TouchableHighlight
           underlayColor="#ffa012"
@@ -45,10 +57,10 @@ class App extends React.Component {
           <Text style={styles.buttonText}>Add Person</Text>
         </TouchableHighlight>
         {
-          this.props.people.map((person, index) => (
+          Object.keys(this.props.people).map((key, index) => (
             <View key={index} style={styles.person}>
-              <Text>Name: {person.name}</Text>
-              <Text onPress={() => this.deletePerson(person)}>Delete Person</Text>
+              <Text>{this.props.people[key].name} - {this.props.people[key].job + "(" + this.props.people[key].synced + ")"}</Text>
+              <Text onPress={() => this.deletePerson(this.props.people[key])}>Delete Person</Text>
             </View>
           ))
         }
@@ -91,7 +103,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (state) {
   return {
-    people: state.people.people
+    people: state.people
   }
 }
 
