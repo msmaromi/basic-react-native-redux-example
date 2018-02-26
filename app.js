@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPerson, deletePerson } from './actions';
+import { insertPerson, deletePerson } from './actions';
 
 import {
   StyleSheet,
@@ -18,7 +18,7 @@ class App extends Component {
   addPerson = () => {
     if (this.state.nameValue === '') return;
     if (this.state.jobValue === '') return;
-    this.props.dispatchAddPerson({
+    this.props.dispatchInsertPerson({
       name: this.state.nameValue,
       job: this.state.jobValue
     });
@@ -109,7 +109,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    dispatchAddPerson: (person) => dispatch(addPerson(person)),
+    dispatchInsertPerson: (person) => dispatch(insertPerson(person)),
     dispatchdeletePerson: (person) => dispatch(deletePerson(person))
   }
 }

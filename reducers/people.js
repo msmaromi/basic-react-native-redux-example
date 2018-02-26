@@ -4,7 +4,7 @@ import { ADD_PERSON_REQUEST, ADD_PERSON_SUCCESS, ADD_PERSON_ROLLBACK, DELETE_PER
 const initialState = { '1': { id: '1', name: 'Chris', job: 'Developer', synced: true } }
 
 export default function peopleReducer(state = initialState, action) {
-  let new_state = state
+  let new_state = { ...state }
   switch (action.type) {
     case ADD_PERSON_REQUEST:
       return {
@@ -33,9 +33,9 @@ export default function peopleReducer(state = initialState, action) {
       return new_state
 
     case DELETE_PERSON:
-      return {
-        people: state.people.filter(p => p.name !== action.person.name),
-      };
+      delete new_state[action.person.id]
+
+      return new_state
     default:
       return state;
   }

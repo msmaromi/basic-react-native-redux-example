@@ -1,5 +1,3 @@
-// reducers/index.js
-
 import { combineReducers } from 'redux'
 import people from './people'
 
