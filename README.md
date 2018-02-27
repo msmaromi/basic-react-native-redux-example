@@ -4,7 +4,7 @@ To get started:
 
 1. Clone repo   
 ```
-git clone https://github.com/react-native-training/basic-react-native-redux-example.git
+git clone https://github.com/msmaromi/basic-react-native-redux-example.git
 ```
 
 2. Install dependencies   
